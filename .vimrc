@@ -49,7 +49,8 @@ set splitright
 " GUI
 "-----------------------
 " If using a dark background within the editing area and syntax highlighting
-set background=dark
+" set background=dark
+colorscheme molokai
 "Make the colors works in a terminal
 set t_Co=256
 
@@ -60,10 +61,9 @@ set laststatus=2
 set statusline=\ pwd:\%ry%h\ \%F%m%r%h\ %w\ \ Line:\ %l/%L:%c
 
 if has("gui_running")
-  colorscheme darkspectrum
-  set gfn=Monaco:h12
   "Show relative line numbers, usefull for delete & copy stuff
   set rnu
+  set gfn=Monaco:h12
   "Some tricks for the GUI
   set guioptions-=T "toggle toolbar for MacVim
   set guioptions-=L "toggle left scroll bar
@@ -71,8 +71,6 @@ if has("gui_running")
 
 else
   set number
-  set t_Sf=<Esc>[&v%p1%dS
-  set t_Sb=<Esc>[&v7S]]
 endif
 
 
@@ -122,19 +120,14 @@ nmap <C-k> :m-2<CR>
 vmap <C-j> :m'>+<CR> gv
 vmap <C-k> :m'<-2<CR> gv
 
-" Remap the completion keys 
-noremap £ <C-n>
-inoremap £ <C-n>
-
 " remap gc to / in the visual mode for the t-comment plugin
 vmap / gc
-
 " map :w !sudo tee % to easier command, to gain root privilege when edit files
 cmap w! :w !sudo tee %
 
 " Scroll faster with shift
-noremap <S-j> <C-f>
-noremap <S-k> <C-b>
+"noremap <S-j> <C-f>
+"noremap <S-k> <C-b>
 
 " Smart way to move btw. windows
 noremap <Down> <C-W>j
@@ -147,8 +140,8 @@ noremap <S-Right> <C-W>4>
 noremap <S-Up> <C-W>4+
 noremap <S-Down> <C-W>4-
 
-"Quicker escaping
-inoremap jj <ESC>
+"Quicker escaping and save
+inoremap jj <ESC>:w<Enter>
 
 "Set the mapleader to ,
 :let mapleader = ","
