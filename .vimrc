@@ -5,7 +5,6 @@
 "   version : 2.1
 "
 "**********************************************************************
-
 "-----------------------
 " General stuff
 "-----------------------
@@ -107,7 +106,6 @@ set smartcase
 "-----------------------
 " Remap
 "-----------------------
-
 " Close the ( & { automaticaly and show the ones match :)
 " inoremap ( ()<left>
 " inoremap { {}<left>
@@ -135,11 +133,8 @@ noremap <S-Down> <C-W>4-
 "Quicker escaping and save
 inoremap jj <ESC>:w<Enter>
 
-" F6 to completion
-inoremap <F6> <C-n>
-
-" F5 to validate PHP syntax
-map <F5> :!php -l %<CR>
+" remap to completion
+inoremap <tab> <c-r>=InsertTabWrapper()<cr>
 
 "Set the mapleader to ,
 :let mapleader = ","
@@ -175,3 +170,18 @@ if has("syntax")
 endif
 "Add my special todolist syntax :p
 autocmd BufRead,BufNewFile *.todo set filetype=todo
+" Add some cool IDE function to PHP editing
+autocmd BufRead,BufNewFile,FileReadPost *.php source ~/.vim/php.vim
+
+"------------------------
+" Fonctions
+"-----------------------
+" Tab completion of tags/keywords if not at the beginning of the line.
+function! InsertTabWrapper()
+  let col = col('.') - 1
+    if !col || getline('.')[col - 1] !~ '\k'
+      return "\<tab>"
+    else
+      return "\<c-p>"
+    endif
+endfunction
