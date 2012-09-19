@@ -122,18 +122,10 @@ vmap <C-k> :m'<-2<CR> gv
 
 " remap gc to / in the visual mode for the t-comment plugin
 vmap / gc
+
 " map :w !sudo tee % to easier command, to gain root privilege when edit files
 cmap w! :w !sudo tee %
 
-" Scroll faster with shift
-"noremap <S-j> <C-f>
-"noremap <S-k> <C-b>
-
-" Smart way to move btw. windows
-noremap <Down> <C-W>j
-noremap <Up> <C-W>k
-noremap <Left> <C-W>h
-noremap <Right> <C-W>l
 " resize windows with arrows & Shift
 noremap <S-Left> <C-W>4<
 noremap <S-Right> <C-W>4>
@@ -142,6 +134,12 @@ noremap <S-Down> <C-W>4-
 
 "Quicker escaping and save
 inoremap jj <ESC>:w<Enter>
+
+" F6 to completion
+inoremap <F6> <C-n>
+
+" F5 to validate PHP syntax
+map <F5> :!php -l %<CR>
 
 "Set the mapleader to ,
 :let mapleader = ","
