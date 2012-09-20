@@ -133,8 +133,8 @@ noremap <S-Down> <C-W>4-
 "Quicker escaping and save
 inoremap jj <ESC>:w<Enter>
 
-" remap to completion
-inoremap <tab> <c-r>=InsertTabWrapper()<cr>
+" remap Tab to completion
+inoremap <Tab> <c-r>=InsertTabWrapper()<cr>
 
 "Set the mapleader to ,
 :let mapleader = ","
@@ -152,7 +152,6 @@ set  shiftwidth =2
 set  softtabstop =2
 set  expandtab
 
-
 "-----------------------
 " Misc
 "-----------------------
@@ -168,10 +167,16 @@ nmap <Leader>v :vs $MYVIMRC<CR>
 if has("syntax")
   syntax on
 endif
-"Add my special todolist syntax :p
-autocmd BufRead,BufNewFile *.todo set filetype=todo
-" Add some cool IDE function to PHP editing
-autocmd BufRead,BufNewFile,FileReadPost *.php source ~/.vim/php.vim
+
+if has("autocmd")
+  augroup vimrc_cmd
+    au!
+    " Add some cool IDE function to PHP editing
+    autocmd BufRead,BufNewFile,FileReadPost *.php source ~/.vim/php.vim
+    "Add my special todolist syntax :p
+    autocmd BufRead,BufNewFile *.todo set filetype=todo
+  augroup END
+endif
 
 "------------------------
 " Fonctions
@@ -180,8 +185,8 @@ autocmd BufRead,BufNewFile,FileReadPost *.php source ~/.vim/php.vim
 function! InsertTabWrapper()
   let col = col('.') - 1
     if !col || getline('.')[col - 1] !~ '\k'
-      return "\<tab>"
+       return "\<tab>"
     else
-      return "\<c-p>"
+      return "\<c-n>"
     endif
 endfunction
