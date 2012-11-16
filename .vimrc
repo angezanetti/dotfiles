@@ -39,7 +39,7 @@ set showmatch
 set ttyfast
 
 " have % bounce between angled brackets, as well as t'other kinds:
-set matchpairs+=<:>
+set matchpairs+=<:>;
 
 " Splits open on the right
 set splitright
@@ -52,6 +52,8 @@ set splitright
 colorscheme molokai
 "Make the colors works in a terminal
 set t_Co=256
+" Syntax coloring lines that are too long just slows down the world
+set synmaxcol=2048
 
 " Show (partial) command in status line.
 set showcmd
@@ -108,7 +110,7 @@ set smartcase
 "-----------------------
 " Close the ( & { automaticaly and show the ones match :)
 " inoremap ( ()<left>
-" inoremap { {}<left>
+inoremap { {}<left>
 " noremap [ []<left>
 
 " move the current line up or down
@@ -133,11 +135,11 @@ noremap <S-Down> <C-W>4-
 "Quicker escaping and save
 inoremap jj <ESC>:w<Enter>
 
-" remap Tab to completion
-inoremap <Tab> <c-r>=InsertTabWrapper()<cr>
-
 "Set the mapleader to ,
 :let mapleader = ","
+
+"Tab for completion
+imap <Tab> <C-R>=SuperTab()<CR>
 
 "-----------------------
 " Indentation
@@ -178,15 +180,11 @@ if has("autocmd")
   augroup END
 endif
 
-"------------------------
-" Fonctions
-"-----------------------
-" Tab completion of tags/keywords if not at the beginning of the line.
-function! InsertTabWrapper()
-  let col = col('.') - 1
-    if !col || getline('.')[col - 1] !~ '\k'
-       return "\<tab>"
-    else
-      return "\<c-n>"
-    endif
+
+function! SuperTab()
+  if (strpart(getline('.'),col('.')-2,1)=~'^\W\?$')
+    return "\<Tab>"
+  else
+    return "\<C-n>"
+  endif
 endfunction
