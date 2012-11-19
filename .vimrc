@@ -39,7 +39,7 @@ set showmatch
 set ttyfast
 
 " have % bounce between angled brackets, as well as t'other kinds:
-set matchpairs+=<:>;
+set matchpairs+=<:>
 
 " Splits open on the right
 set splitright
@@ -63,7 +63,7 @@ set statusline=\ pwd:\%ry%h\ \%F%m%r%h\ %w\ \ Line:\ %l/%L:%c
 
 if has("gui_running")
   "Show relative line numbers, usefull for delete & copy stuff
-  set rnu
+  " set rnu
   set gfn=Monaco:h12
   "Some tricks for the GUI
   set guioptions-=T "toggle toolbar for MacVim
@@ -71,7 +71,7 @@ if has("gui_running")
   set guioptions-=r "toggle right scroll bar
 
 else
-  set number
+  " set number
 endif
 
 
