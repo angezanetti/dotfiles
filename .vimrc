@@ -92,6 +92,8 @@ nmap <S-Tab> <<
 vmap <Tab> >gv
 vmap <S-Tab> <gv
 
+" AutoIndent 
+nmap <leader>a :set noautoindent
 " Show tabs and trailing spaces so I can remove them
 " set list
 " set listchars=tab:»·,trail:·
@@ -108,6 +110,9 @@ set smartcase
 "-----------------------
 " Remap
 "-----------------------
+"Set the mapleader to ,
+:let mapleader = ","
+
 " Close the ( & { automaticaly and show the ones match :)
 " inoremap ( ()<left>
 inoremap { {}<left>
@@ -124,22 +129,26 @@ vmap <C-k> :m'<-2<CR> gv
 vmap / gc
 
 " map :w !sudo tee % to easier command, to gain root privilege when edit files
-cmap w! :w !sudo tee %
+cmap w!! %!sudo tee > /dev/null % 
 
 " resize windows with arrows & Shift
 noremap <S-Left> <C-W>4<
 noremap <S-Right> <C-W>4>
 noremap <S-Up> <C-W>4+
-noremap <S-Down> <C-W>4-
+noremap <S-Down> <C-W>4- 
+"Jump to start and end of line using the home row keys
+noremap H ^
+noremap L $
 
 "Quicker escaping and save
 inoremap jj <ESC>:w<Enter>
 
-"Set the mapleader to ,
-:let mapleader = ","
 
 "Tab for completion
 imap <Tab> <C-R>=SuperTab()<CR>
+
+"Map y to work like other capitals
+map Y y$
 
 "-----------------------
 " Indentation
@@ -154,6 +163,8 @@ set  shiftwidth =2
 set  softtabstop =2
 set  expandtab
 
+" Easily reach the paste mode
+set pastetoggle=<Leader>p
 "-----------------------
 " Misc
 "-----------------------
@@ -177,6 +188,8 @@ if has("autocmd")
     autocmd BufRead,BufNewFile,FileReadPost *.php source ~/.vim/php.vim
     "Add my special todolist syntax :p
     autocmd BufRead,BufNewFile *.todo set filetype=todo
+    " automatically reload vimrc when it's saved
+    au BufWritePost .vimrc so ~/.vimrc
   augroup END
 endif
 
