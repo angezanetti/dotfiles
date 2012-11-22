@@ -93,7 +93,9 @@ vmap <Tab> >gv
 vmap <S-Tab> <gv
 
 " AutoIndent 
-nmap <leader>a :set noautoindent
+nmap <Leader>a :set noautoindent
+
+nmap <Leader>n :set number! number?<cr>
 " Show tabs and trailing spaces so I can remove them
 " set list
 " set listchars=tab:»·,trail:·
