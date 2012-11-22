@@ -63,17 +63,12 @@ set statusline=\ pwd:\%ry%h\ \%F%m%r%h\ %w\ \ Line:\ %l/%L:%c
 
 if has("gui_running")
   "Show relative line numbers, usefull for delete & copy stuff
-  " set rnu
   set gfn=Monaco:h12
   "Some tricks for the GUI
   set guioptions-=T "toggle toolbar for MacVim
   set guioptions-=L "toggle left scroll bar
   set guioptions-=r "toggle right scroll bar
-
-else
-  " set number
 endif
-
 
 "Auto completion menu
 set  wildmenu
@@ -91,14 +86,19 @@ nmap <Tab> >>
 nmap <S-Tab> <<
 vmap <Tab> >gv
 vmap <S-Tab> <gv
-
-" AutoIndent 
-nmap <Leader>a :set noautoindent
-
-nmap <Leader>n :set number! number?<cr>
 " Show tabs and trailing spaces so I can remove them
 " set list
 " set listchars=tab:»·,trail:·
+
+"-----------------------
+" Toggle
+"-----------------------
+
+"Toggle  AutoIndent with a cool shortcut 
+nmap <Leader>a :set noautoindent
+
+"Toggle  Numbers with a cool shortcut 
+nmap <Leader>n :set number! number?<cr>
 
 "-----------------------
 " Search
