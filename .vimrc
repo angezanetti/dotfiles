@@ -48,15 +48,17 @@ set splitright
 " GUI
 "-----------------------
 " If using a dark background within the editing area and syntax highlighting
-" set background=dark
 colorscheme molokai
+
 "Make the colors works in a terminal
 set t_Co=256
+
 " Syntax coloring lines that are too long just slows down the world
 set synmaxcol=2048
 
 " Show (partial) command in status line.
 set showcmd
+
 "Always Show the statut line with kool infos in it :)
 set laststatus=2
 set statusline=\ pwd:\%ry%h\ \%F%m%r%h\ %w\ \ Line:\ %l/%L:%c
@@ -86,19 +88,15 @@ nmap <Tab> >>
 nmap <S-Tab> <<
 vmap <Tab> >gv
 vmap <S-Tab> <gv
-" Show tabs and trailing spaces so I can remove them
-" set list
-" set listchars=tab:»·,trail:·
 
 "-----------------------
 " Toggle
 "-----------------------
-
-"Toggle  AutoIndent with a cool shortcut 
-nmap <Leader>a :set noautoindent
-
 "Toggle  Numbers with a cool shortcut 
 nmap <Leader>n :set number! number?<cr>
+
+" Easily reach the paste mode
+set pastetoggle=<Leader>p
 
 "-----------------------
 " Search
@@ -145,7 +143,6 @@ noremap L $
 "Quicker escaping and save
 inoremap jj <ESC>:w<Enter>
 
-
 "Tab for completion
 imap <Tab> <C-R>=SuperTab()<CR>
 
@@ -165,8 +162,6 @@ set  shiftwidth =2
 set  softtabstop =2
 set  expandtab
 
-" Easily reach the paste mode
-set pastetoggle=<Leader>p
 "-----------------------
 " Misc
 "-----------------------
