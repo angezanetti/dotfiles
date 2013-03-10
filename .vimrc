@@ -65,7 +65,7 @@ set statusline=\ pwd:\%ry%h\ \%F%m%r%h\ %w\ \ Line:\ %l/%L:%c
 
 if has("gui_running")
   "Show relative line numbers, usefull for delete & copy stuff
-  set gfn=Monaco:h12
+  set gfn=Monaco:h11
   "Some tricks for the GUI
   set guioptions-=T "toggle toolbar for MacVim
   set guioptions-=L "toggle left scroll bar
@@ -80,8 +80,8 @@ set  wildignore =*.o,*.r,*.so,*.sl,*.tar,*.tgz    "ignore certain type of files 
 " Hihlight the cursor line
 set cursorline
 
-"Set 5 lines to the curors - when moving vertical..
-set so=5
+"Set 8 lines btw the screen top/bottom and the cursor
+set so=10
 
 "Indentation with Tab
 nmap <Tab> >>
@@ -93,10 +93,10 @@ vmap <S-Tab> <gv
 " Toggle
 "-----------------------
 "Toggle  Numbers with a cool shortcut 
-nmap <Leader>n :set number! number?<cr>
+nmap <silent><Leader> :set number! number?<cr>
 
 " Easily reach the paste mode
-set pastetoggle=<Leader>p
+set pastetoggle=<C-p>
 
 "-----------------------
 " Search
@@ -106,6 +106,28 @@ set incsearch
 "Ignore case when searching
 set ignorecase
 set smartcase
+
+"-----------------------
+" Ctrl P Finder
+"-----------------------
+
+let g:ctrlp_map = '<c-p>'
+let g:ctrlp_cmd = 'CtrlP'
+let g:ctrlp_working_path_mode = 'ra'
+
+"Exclude files and directories using Vim's wildignore and CtrlP's own g:ctrlp_custom_ignore:
+
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
+
+let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/]\.(git|hg|svn)$',
+  \ 'file': '\v\.(exe|so|dll)$',
+  \ 'link': 'some_bad_symbolic_links',
+  \ }
+
+"Use a custom file listing command:
+let g:ctrlp_user_command = 'find %s -type f'        " MacOSX/Linux
 
 "-----------------------
 " Remap
@@ -149,6 +171,13 @@ imap <Tab> <C-R>=SuperTab()<CR>
 "Map y to work like other capitals
 map Y y$
 
+"Add some " surrounding the current word for HTML stuff
+noremap "" bi"<Esc>ea"<Esc> 
+noremap '' bi'<Esc>ea'<Esc> 
+" Same trick for PHP dev for regulary forgot the fu*** $ in beginning of the
+" variables
+noremap $$ <Esc>bi$<Esc> 
+
 "-----------------------
 " Indentation
 "-----------------------
@@ -169,9 +198,9 @@ set  expandtab
 filetype plugin on
 filetype indent on
 
-" source $MYVIMRC reloads the saved $MYVIMRC
+"source $MYVIMRC reloads the saved $MYVIMRC
 nmap <Leader>s :source $MYVIMRC<CR>
-" opens $MYVIMRC for editing, or use :tabedit $MYVIMRC
+"opens $MYVIMRC for editing, or use :tabedit $MYVIMRC
 nmap <Leader>v :vs $MYVIMRC<CR>
 
 if has("syntax")
