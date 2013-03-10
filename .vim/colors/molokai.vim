@@ -218,4 +218,3 @@ if &t_Co > 255
    hi NonText         ctermfg=59
    hi SpecialKey      ctermfg=59
 end
-
