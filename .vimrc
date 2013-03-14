@@ -108,28 +108,6 @@ set ignorecase
 set smartcase
 
 "-----------------------
-" Ctrl P Finder
-"-----------------------
-
-let g:ctrlp_map = '<c-p>'
-let g:ctrlp_cmd = 'CtrlP'
-let g:ctrlp_working_path_mode = 'ra'
-
-"Exclude files and directories using Vim's wildignore and CtrlP's own g:ctrlp_custom_ignore:
-
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
-
-let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
-let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v[\/]\.(git|hg|svn)$',
-  \ 'file': '\v\.(exe|so|dll)$',
-  \ 'link': 'some_bad_symbolic_links',
-  \ }
-
-"Use a custom file listing command:
-let g:ctrlp_user_command = 'find %s -type f'        " MacOSX/Linux
-
-"-----------------------
 " Remap
 "-----------------------
 "Set the mapleader to ,
@@ -190,6 +168,18 @@ set  tabstop =2
 set  shiftwidth =2
 set  softtabstop =2
 set  expandtab
+
+"-----------------------
+" Command T 
+"-----------------------
+nnoremap <silent> <Leader>t :CommandT<CR>
+nnoremap <silent> <Leader>b :CommandTBuffer<CR>
+
+
+if has("gui_macvim")
+    macmenu &File.New\ Tab key=<nop>
+    map <D-t> :CommandT<CR>
+  endif
 
 "-----------------------
 " Misc
