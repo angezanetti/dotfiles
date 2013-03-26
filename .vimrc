@@ -92,7 +92,7 @@ set so=10
 " Toggle
 "-----------------------
 "Toggle  Numbers with a cool shortcut 
-nmap <silent><Leader>N :set number! number?<cr>
+nmap <silent><Leader>l :set number! number?<cr>
 
 " Easily reach the paste mode
 set pastetoggle=<C-p>
@@ -140,9 +140,6 @@ noremap <S-Right> <C-W>4>
 noremap <S-Up> <C-W>4+
 noremap <S-Down> <C-W>4- 
 
-"Quicker escaping and save
-inoremap jj <ESC>:w<Enter>
-
 "Tab for completion
 imap <Tab> <C-R>=SuperTab()<CR>
 
@@ -164,6 +161,10 @@ vmap <S-Tab> <gv
 
 "fix old vi function
 map Y y$
+" Jump to start and end of line using the home row keys
+map H ^
+map L $
+
 "-----------------------
 " Indentation
 "-----------------------
@@ -190,7 +191,6 @@ set undodir=$HOME/.vim/undodir,.
 "enable plugins
 filetype plugin on
 filetype indent on
-
 "source $MYVIMRC reloads the saved $MYVIMRC
 nmap <Leader>s :source $MYVIMRC<CR>
 "opens $MYVIMRC for editing, or use :tabedit $MYVIMRC
