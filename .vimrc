@@ -6,6 +6,11 @@
 "
 "**********************************************************************
 "-----------------------
+" Bundles
+"-----------------------
+" Bundle: ctrlp.vim
+
+"-----------------------
 " General stuff
 "-----------------------
 
@@ -83,17 +88,11 @@ set cursorline
 "Set 8 lines btw the screen top/bottom and the cursor
 set so=10
 
-"Indentation with Tab
-nmap <Tab> >>
-nmap <S-Tab> <<
-vmap <Tab> >gv
-vmap <S-Tab> <gv
-
 "-----------------------
 " Toggle
 "-----------------------
 "Toggle  Numbers with a cool shortcut 
-nmap <silent><Leader> :set number! number?<cr>
+nmap <silent><Leader>N :set number! number?<cr>
 
 " Easily reach the paste mode
 set pastetoggle=<C-p>
@@ -107,6 +106,10 @@ set incsearch
 set ignorecase
 set smartcase
 
+"Keep search pattern at the center of the screen
+nnoremap <silent> n nzz
+nnoremap <silent> N Nzz
+
 "-----------------------
 " Remap
 "-----------------------
@@ -114,9 +117,9 @@ set smartcase
 :let mapleader = ","
 
 " Close the ( & { automaticaly and show the ones match :)
-" inoremap ( ()<left>
+inoremap ( ()<left>
 inoremap { {}<left>
-" noremap [ []<left>
+noremap [ []<left>
 
 " move the current line up or down
 nmap <C-j> :m+<CR>
@@ -136,18 +139,12 @@ noremap <S-Left> <C-W>4<
 noremap <S-Right> <C-W>4>
 noremap <S-Up> <C-W>4+
 noremap <S-Down> <C-W>4- 
-"Jump to start and end of line using the home row keys
-noremap H ^
-noremap L $
 
 "Quicker escaping and save
 inoremap jj <ESC>:w<Enter>
 
 "Tab for completion
 imap <Tab> <C-R>=SuperTab()<CR>
-
-"Map y to work like other capitals
-map Y y$
 
 "Add some " surrounding the current word for HTML stuff
 noremap "" bi"<Esc>ea"<Esc> 
@@ -156,6 +153,17 @@ noremap '' bi'<Esc>ea'<Esc>
 " variables
 noremap $$ <Esc>bi$<Esc> 
 
+"Don't tell me about Exmode 
+nnoremap Q <nop>
+
+"Indentation with Tab
+nmap <Tab> >>
+nmap <S-Tab> <<
+vmap <Tab> >gv
+vmap <S-Tab> <gv
+
+"fix old vi function
+map Y y$
 "-----------------------
 " Indentation
 "-----------------------
@@ -170,16 +178,11 @@ set  softtabstop =2
 set  expandtab
 
 "-----------------------
-" Command T 
+" Udo
 "-----------------------
-nnoremap <silent> <Leader>t :CommandT<CR>
-nnoremap <silent> <Leader>b :CommandTBuffer<CR>
-
-
-if has("gui_macvim")
-    macmenu &File.New\ Tab key=<nop>
-    map <D-t> :CommandT<CR>
-  endif
+"udf:   persist the undo tree to a file; dir below will not be auto-created
+set undofile
+set undodir=$HOME/.vim/undodir,.
 
 "-----------------------
 " Misc
@@ -217,3 +220,5 @@ function! SuperTab()
     return "\<C-n>"
   endif
 endfunction
+
+set runtimepath^=~/.vim/bundle/ctrlp.vim
