@@ -151,7 +151,7 @@ noremap '' bi'<Esc>ea'<Esc>
 noremap $$ <Esc>bi$<Esc> 
 
 "Don't tell me about Exmode 
-nnoremap Q <nop>
+noremap Q <nop>
 
 "Indentation with Tab
 nmap <Tab> >>
@@ -179,7 +179,7 @@ set  softtabstop =2
 set  expandtab
 
 "-----------------------
-" Udo
+" Undo
 "-----------------------
 "udf:   persist the undo tree to a file; dir below will not be auto-created
 set undofile
