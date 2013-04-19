@@ -1,2 +1,9 @@
-
-.DS_Store
+# OS generated files #
+######################
+.DS_Store*
+ehthumbs.db
+Icon?
+Thumbs.db
+.espressostorage
+*.esproj
+*.sass-cache*
