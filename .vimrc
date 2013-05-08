@@ -1,15 +1,10 @@
 "********************************************************************
 "
-" Made by @AngeZanetti - 2012
+" Made by @AngeZanetti - 2013
 "   under Beerware licence
 "   version : 2.1
 "
 "**********************************************************************
-"-----------------------
-" Bundles
-"-----------------------
-" Bundle: ctrlp.vim
-
 "-----------------------
 " General stuff
 "-----------------------
@@ -86,7 +81,7 @@ set  wildignore =*.o,*.r,*.so,*.sl,*.tar,*.tgz    "ignore certain type of files 
 set cursorline
 
 "Set 8 lines btw the screen top/bottom and the cursor
-set so=10
+set so=50
 
 "-----------------------
 " Toggle
@@ -161,9 +156,6 @@ vmap <S-Tab> <gv
 
 "fix old vi function
 map Y y$
-" Jump to start and end of line using the home row keys
-map H ^
-map L $
 
 "-----------------------
 " Indentation
@@ -182,9 +174,9 @@ set  expandtab
 " Undo
 "-----------------------
 "udf:   persist the undo tree to a file; dir below will not be auto-created
-set undofile
-set undodir=$HOME/.vim/undodir,.
-
+" set undofile
+" set undodir=$HOME/.vim/undodir,.
+" 
 "-----------------------
 " Misc
 "-----------------------
@@ -221,4 +213,5 @@ function! SuperTab()
   endif
 endfunction
 
-set runtimepath^=~/.vim/bundle/ctrlp.vim
+"Be nice with mutt 
+au BufRead /tmp/mutt-* set tw=72
