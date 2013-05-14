@@ -6,4 +6,11 @@ Icon?
 Thumbs.db
 .espressostorage
 *.esproj
-*.sass-cache*
+
+# SASS Stuff
+.sass-cache*
+sass/sass-cache
+
+#Dandelion
+dandelion.yml
+
