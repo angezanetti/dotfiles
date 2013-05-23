@@ -157,6 +157,11 @@ vmap <S-Tab> <gv
 "fix old vi function
 map Y y$
 
+"I can see you !
+noremap <Leader>i :set list!<CR>
+lcs=trail:·,tab:»·,eol:¬
+
+
 "-----------------------
 " Indentation
 "-----------------------
@@ -173,9 +178,10 @@ set  expandtab
 "-----------------------
 " Undo
 "-----------------------
-"udf:   persist the undo tree to a file; dir below will not be auto-created
-" set undofile
-" set undodir=$HOME/.vim/undodir,.
+if (v:version >=703)
+  set undofile
+  set undodir=$HOME/.vim/undodir,.
+endif
 " 
 "-----------------------
 " Misc
