@@ -111,11 +111,6 @@ nnoremap <silent> N Nzz
 "Set the mapleader to ,
 :let mapleader = ","
 
-" Close the ( & { automaticaly and show the ones match :)
-inoremap ( ()<left>
-inoremap { {}<left>
-noremap [ []<left>
-
 " move the current line up or down
 nmap <C-j> :m+<CR>
 nmap <C-k> :m-2<CR>
@@ -138,9 +133,6 @@ noremap <S-Down> <C-W>4-
 "Tab for completion
 imap <Tab> <C-R>=SuperTab()<CR>
 
-"Add some " surrounding the current word for HTML stuff
-noremap "" bi"<Esc>ea"<Esc> 
-noremap '' bi'<Esc>ea'<Esc> 
 " Same trick for PHP dev for regulary forgot the fu*** $ in beginning of the
 " variables
 noremap $$ <Esc>bi$<Esc> 
@@ -156,11 +148,6 @@ vmap <S-Tab> <gv
 
 "fix old vi function
 map Y y$
-
-"I can see you !
-noremap <Leader>i :set list!<CR>
-lcs=trail:·,tab:»·,eol:¬
-
 
 "-----------------------
 " Indentation
@@ -201,7 +188,6 @@ endif
 if has("autocmd")
   augroup vimrc_cmd
     au!
-    " Add some cool IDE function to PHP editing
     autocmd BufRead,BufNewFile,FileReadPost *.php source ~/.vim/php.vim
     "Add my special todolist syntax :p
     autocmd BufRead,BufNewFile *.todo set filetype=todo
