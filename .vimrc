@@ -105,6 +105,7 @@ set smartcase
 nnoremap <silent> n nzz
 nnoremap <silent> N Nzz
 
+inoremap kj <Esc>
 "-----------------------
 " Remap
 "-----------------------
