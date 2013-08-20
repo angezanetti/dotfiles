@@ -17,6 +17,7 @@ set nowb
 set nobackup
 set noswapfile
 
+
 " Set to auto read when a file is changed from the outside
 set autoread
 
@@ -106,6 +107,9 @@ nnoremap <silent> n nzz
 nnoremap <silent> N Nzz
 
 inoremap kj <Esc>
+inoremap jk <Esc>
+map W :w<CR>
+
 "-----------------------
 " Remap
 "-----------------------
@@ -189,6 +193,7 @@ endif
 if has("autocmd")
   augroup vimrc_cmd
     au!
+    "Add some cool IDE function to PHP editing
     autocmd BufRead,BufNewFile,FileReadPost *.php source ~/.vim/php.vim
     "Add my special todolist syntax :p
     autocmd BufRead,BufNewFile *.todo set filetype=todo
