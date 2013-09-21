@@ -1,0 +1,12 @@
+*bundle-log.txt*                   Bundle Install Log
+
+
+Logs bundle install activity. Also see the list of installed |bundles|.
+
+Jeu 14 mar 2013 11:07:40 CET by vim-update-bundles 0.8
+   no updates
+
+Jeu 14 mar 2013 11:10:14 CET by vim-update-bundles 0.8
+ Add |ctrlp.vim|                1.79               https://github.com/vim-scripts/ctrlp.vim.git
+   1 bundle added
+

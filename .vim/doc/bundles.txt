@@ -1,0 +1,10 @@
+*bundles* *bundles.txt*            Installed Bundles
+
+
+Lists the currently installed bundles. Also see the |bundle-log|.
+Last updated by vim-update-bundles on Jeu 14 mar 2013 11:10:14 CET.
+
+  PLUGIN                           VERSION                RELEASE DATE
+------------------------------------------------------------------------
+  |ctrlp.vim|                      1.79                   2013-01-29
+
