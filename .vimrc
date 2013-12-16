@@ -6,7 +6,6 @@
 "
 "**********************************************************************
 execute pathogen#infect()
-"
 "-----------------------
 " General stuff
 "-----------------------
@@ -36,14 +35,17 @@ set tm=500
 
 " Show matching brackets.
 set showmatch
-set matchpairs+=<:>
 
 " We have a fast terminal
 set ttyfast
 
+" have % bounce between angled brackets, as well as t'other kinds:
+set matchpairs+=<:>
+
 " Splits open on the right
 set splitright
 
+set mouse=a
 "-----------------------
 " GUI
 "-----------------------
@@ -56,13 +58,15 @@ set t_Co=256
 " Syntax coloring lines that are too long just slows down the world
 set synmaxcol=2048
 
+" Show (partial) command in status line.
+set showcmd
+
 "Always Show the statut line with kool infos in it :)
 set laststatus=2
 set statusline=\ pwd:\%ry%h\ \%F%m%r%h\ %w\ \ Line:\ %l/%L:%c
 
 if has("gui_running")
-  "Show relative line numbers, usefull for delete & copy stuff
-  set gfn=Monaco:h11
+  set guifont=Monospace
   "Some tricks for the GUI
   set guioptions-=T "toggle toolbar for MacVim
   set guioptions-=L "toggle left scroll bar
@@ -80,6 +84,12 @@ set cursorline
 "Set 8 lines btw the screen top/bottom and the cursor
 set so=50
 
+"-----------------------
+" Toggle
+"-----------------------
+"Toggle  Numbers with a cool shortcut 
+nmap <silent><Leader>l :set number! number?<cr>
+
 " Easily reach the paste mode
 set pastetoggle=<C-p>
 
@@ -96,15 +106,22 @@ set smartcase
 nnoremap <silent> n nzz
 nnoremap <silent> N Nzz
 
-"-----------------------
-" Remap
-"-----------------------
 inoremap kj <Esc>
 inoremap jk <Esc>
 map W :w<CR>
 
+"-----------------------
+" Remap
+"-----------------------
 "Set the mapleader to ,
 :let mapleader = ","
+
+" Close the ( & { automaticaly and show the ones match :)
+" inoremap ( ()<left>
+" inoremap { {}<left>
+" inoremap " ""<left>
+" inoremap ' ''<left>
+" noremap [ []<left>
 
 " move the current line up or down
 nmap <C-j> :m+<CR>
@@ -128,10 +145,6 @@ noremap <S-Down> <C-W>4-
 "Tab for completion
 imap <Tab> <C-R>=SuperTab()<CR>
 
-" Same trick for PHP dev for regulary forgot the fu*** $ in beginning of the
-" variables
-noremap $$ <Esc>bi$<Esc> 
-
 "Don't tell me about Exmode 
 noremap Q <nop>
 
@@ -144,19 +157,18 @@ vmap <S-Tab> <gv
 "fix old vi function
 map Y y$
 
-"-----------------------
 " Indentation
+"-----------------------
 "-----------------------
 set autoindent
 set smartindent
 set backspace=indent,eol,start
 
 " Convert tabs to spaces
-set tabstop=2
-set shiftwidth=2
-set softtabstop=2
-set expandtab
-set shiftround
+set  tabstop =2
+set  shiftwidth =2
+set  softtabstop =2
+set  expandtab
 
 "-----------------------
 " Undo
@@ -181,10 +193,17 @@ if has("syntax")
   syntax on
 endif
 
-"Add some cool IDE function to PHP editing
-autocmd BufRead,BufNewFile,FileReadPost *.php source ~/.vim/php.vim
-" automatically reload vimrc when it's saved
-autocmd BufWritePost $MYVIMRC source $MYVIMRC
+if has("autocmd")
+  augroup vimrc_cmd
+    au!
+    " Add some cool IDE function to PHP editing
+    autocmd BufRead,BufNewFile,FileReadPost *.php source ~/.vim/php.vim
+    "Add my special todolist syntax :p
+    autocmd BufRead,BufNewFile *.todo set filetype=todo
+    " automatically reload vimrc when it's saved
+    au BufWritePost .vimrc so ~/.vimrc
+  augroup END
+endif
 
 
 function! SuperTab()
