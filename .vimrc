@@ -49,7 +49,6 @@ set mouse=a
 "-----------------------
 " GUI
 "-----------------------
-" If using a dark background within the editing area and syntax highlighting
 colorscheme molokai
 
 "Make the colors works in a terminal
@@ -63,7 +62,7 @@ set showcmd
 
 "Always Show the statut line with kool infos in it :)
 set laststatus=2
-set statusline=\ pwd:\%ry%h\ \%F%m%r%h\ %w\ \ Line:\ %l/%L:%c
+" set statusline=\ pwd:\%ry%h\ \%F%m%r%h\ %w\ \ Line:\ %l/%L:%c
 
 if has("gui_running")
   set guifont=Monospace
@@ -123,6 +122,9 @@ map W :w<CR>
 " inoremap ' ''<left>
 " noremap [ []<left>
 
+"Let the CtrlP magic happens
+nmap <C-p> :CtrlP<CR>
+
 " move the current line up or down
 nmap <C-j> :m+<CR>
 nmap <C-k> :m-2<CR>
@@ -155,7 +157,7 @@ vmap <Tab> >gv
 vmap <S-Tab> <gv
 
 "fix old vi function
-map Y y$
+map Y "+y
 
 " Indentation
 "-----------------------
@@ -216,3 +218,5 @@ endfunction
 
 "Be nice with mutt 
 au BufRead /tmp/mutt-* set tw=72
+" Ctrlp stuff
+set runtimepath^=~/.vim/bundle/ctrlp.vim
