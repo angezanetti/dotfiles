@@ -83,6 +83,8 @@ set cursorline
 "Set 8 lines btw the screen top/bottom and the cursor
 set so=50
 
+" Synchronise le clipboard de Vim et celui de Linux !
+set clipboard=unnamedplus
 "-----------------------
 " Toggle
 "-----------------------
