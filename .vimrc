@@ -17,6 +17,8 @@ set nocompatible
 set nowb
 set nobackup
 set noswapfile
+set undofile
+set undodir=$HOME/.vim/undodir
 
 " Set to auto read when a file is changed from the outside
 set autoread
@@ -46,6 +48,8 @@ set matchpairs+=<:>
 set splitright
 
 set mouse=a
+
+set clipboard=unnamedplus
 "-----------------------
 " GUI
 "-----------------------
@@ -64,14 +68,6 @@ set showcmd
 set laststatus=2
 " set statusline=\ pwd:\%ry%h\ \%F%m%r%h\ %w\ \ Line:\ %l/%L:%c
 
-if has("gui_running")
-  set guifont=Monospace
-  "Some tricks for the GUI
-  set guioptions-=T "toggle toolbar for MacVim
-  set guioptions-=L "toggle left scroll bar
-  set guioptions-=r "toggle right scroll bar
-endif
-
 "Auto completion menu
 set  wildmenu
 set  wildmode =list:longest,list:full    "show all the possibilities
@@ -82,14 +78,6 @@ set cursorline
 
 "Set 8 lines btw the screen top/bottom and the cursor
 set so=50
-
-" Synchronise le clipboard de Vim et celui de Linux !
-set clipboard=unnamedplus
-"-----------------------
-" Toggle
-"-----------------------
-"Toggle  Numbers with a cool shortcut 
-nmap <silent><Leader>l :set number! number?<cr>
 
 " Easily reach the paste mode
 set pastetoggle=<C-p>
@@ -103,6 +91,9 @@ set incsearch
 set ignorecase
 set smartcase
 
+set hlsearch
+nnoremap <Leader>h :nohlsearch<Bar>:echo<CR>
+
 "Keep search pattern at the center of the screen
 nnoremap <silent> n nzz
 nnoremap <silent> N Nzz
@@ -112,21 +103,20 @@ inoremap jk <Esc>
 map W :w<CR>
 
 "-----------------------
-" Remap
+" Leader 
 "-----------------------
 "Set the mapleader to ,
 :let mapleader = ","
 
-" Close the ( & { automaticaly and show the ones match :)
-" inoremap ( ()<left>
-" inoremap { {}<left>
-" inoremap " ""<left>
-" inoremap ' ''<left>
-" noremap [ []<left>
-
 "Let the CtrlP magic happens
-nmap <C-p> :CtrlP<CR>
+nmap <Leader>p :CtrlP<CR>
 
+"NERDTree appears
+nmap <Leader>n :NERDTree<CR>
+
+"-----------------------
+" Remap
+"-----------------------
 " move the current line up or down
 nmap <C-j> :m+<CR>
 nmap <C-k> :m-2<CR>
@@ -151,6 +141,7 @@ imap <Tab> <C-R>=SuperTab()<CR>
 
 "Don't tell me about Exmode 
 noremap Q <nop>
+noremap K <nop>
 
 "Indentation with Tab
 nmap <Tab> >>
@@ -159,7 +150,7 @@ vmap <Tab> >gv
 vmap <S-Tab> <gv
 
 "fix old vi function
-map Y "+y
+map Y y$
 
 " Indentation
 "-----------------------
@@ -174,14 +165,6 @@ set  shiftwidth =2
 set  softtabstop =2
 set  expandtab
 
-"-----------------------
-" Undo
-"-----------------------
-if (v:version >=703)
-  set undofile
-  set undodir=$HOME/.vim/undodir,.
-endif
-" 
 "-----------------------
 " Misc
 "-----------------------
