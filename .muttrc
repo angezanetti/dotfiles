@@ -1,0 +1,73 @@
+#### IMAP #####
+set folder      = imaps://ssl0.ovh.net/
+set imap_user   = contact@angezanetti.com
+#set imap_pass   = your-imap-password
+set spoolfile   = +INBOX
+mailboxes       = +INBOX
+
+# Store message headers locally to speed things up.
+# If hcache is a folder, Mutt will create sub cache folders for each account which may speeds things even more up.
+set header_cache = ~/.cache/mutt
+
+# Store messages locally to speed things up, like searching message bodies.
+# Can be the same folder as header_cache.
+# This will cost important disk usage according to your e-mail amount.
+set message_cachedir = "~/.cache/mutt"
+
+# Allow Mutt to open new imap connection automatically.
+unset imap_passive
+
+# Keep IMAP connection alive by polling intermittently (time in seconds).
+set imap_keepalive = 300
+
+# How often to check for new mail (time in seconds).
+set mail_check = 120
+
+#### SMTP #####
+set my_user=contact@angezanetti.com
+
+set realname = 'Xavier Coiffard'
+set from = 'contact@angezanetti.com'
+set use_from = yes
+
+set smtp_url=smtps://$my_user@ssl0.ovh.net
+set ssl_force_tls = yes
+
+##### GENERAL ######
+set editor=vim
+
+bind index <tab>    sync-mailbox
+bind index <space>  collapse-thread
+
+# Vim like keybinds
+bind pager j next-line
+bind pager k previous-line
+bind index gg first-entry
+bind index G last-entry
+
+set pager_index_lines=6
+set wait_key = no
+unset move
+unset mark_old 
+set smart_wrap = yes
+set sort = 'threads'
+set sort_aux = 'reverse-last-date-received'
+
+# Header Options -------------------------------------
+ignore *                                # ignore all headers
+unignore from: to: cc: date: subject:   # show only these
+unhdr_order *                           # some distros order things by default
+hdr_order from: to: cc: date: subject:  # and in this order
+
+# Index View Options ---------------------------------
+set date_format = "%d/%m/%y"
+set index_format = "[%Z]  %D  %-20.20F  %s"
+set status_format="[Mailbox: %f ] » Messages:%?M?%M/?%m%?n? » New:%n?%?d? » Deleted:%d?%?F? » Flagged:%F? %>─[%P]"
+set pager_format="[%C/%m] %n » %s %>─[%P]"
+set sort = threads                         # like gmail
+set uncollapse_jump                        # don't collapse on an unread message
+set sort_re                                # thread based on regex
+set reply_regexp = "^(([Rr][Ee]?(\[[0-9]+\])?: *)?(\[[^]]+\] *)?)*"
+
+##### COLORS ######
+source .mutt/colors
