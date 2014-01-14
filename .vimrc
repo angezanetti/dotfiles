@@ -48,18 +48,15 @@ set matchpairs+=<:>
 set splitright
 
 set mouse=a
-
-set clipboard=unnamedplus
 "-----------------------
 " GUI
 "-----------------------
 colorscheme molokai
+set guioptions-=m  "remove menu bar
+set guioptions-=T  "remove toolbar
 
 "Make the colors works in a terminal
 set t_Co=256
-
-" Syntax coloring lines that are too long just slows down the world
-set synmaxcol=2048
 
 " Show (partial) command in status line.
 set showcmd
@@ -98,10 +95,12 @@ nnoremap <Leader>h :nohlsearch<Bar>:echo<CR>
 nnoremap <silent> n nzz
 nnoremap <silent> N Nzz
 
-inoremap kj <Esc>
-inoremap jk <Esc>
 map W :w<CR>
+"Quick buffer navigation
+nnoremap gb :buffers<CR>:sb<Space>
 
+noremap H ^
+noremap L $
 "-----------------------
 " Leader 
 "-----------------------
@@ -111,18 +110,33 @@ map W :w<CR>
 "Let the CtrlP magic happens
 nmap <Leader>p :CtrlP<CR>
 
+" Copy to the clipboard -- need +xterm-clipboard 
+nmap <Leader>y "+y<CR>
+
+" Go to the void bitch :)
+nmap <Leader>d "_d<CR>
+
 "NERDTree appears
 nmap <Leader>n :NERDTree<CR>
+
+"Remove trainliung spaces
+nmap <Leader>t :%s/\s\+$//<CR>
 
 "-----------------------
 " Remap
 "-----------------------
 " move the current line up or down
-nmap <C-j> :m+<CR>
-nmap <C-k> :m-2<CR>
-" move the selected block up or down
-vmap <C-j> :m'>+<CR> gv
-vmap <C-k> :m'<-2<CR> gv
+" nmap <C-j> :m+<CR>
+" nmap <C-k> :m-2<CR>
+" " move the selected block up or down
+" vmap <C-j> :m'>+<CR> gv
+" vmap <C-k> :m'<-2<CR> gv
+
+" Move between splits
+nmap <C-j> <C-w>j
+nmap <C-k> <C-w>k
+nmap <C-h> <C-w>h
+nmap <C-l> <C-w>l
 
 " remap gc to / in the visual mode for the t-comment plugin
 vmap / gc
@@ -164,6 +178,8 @@ set  tabstop =2
 set  shiftwidth =2
 set  softtabstop =2
 set  expandtab
+
+set clipboard=unnamedplus
 
 "-----------------------
 " Misc
