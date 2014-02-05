@@ -95,7 +95,8 @@ nnoremap <Leader>h :nohlsearch<Bar>:echo<CR>
 nnoremap <silent> n nzz
 nnoremap <silent> N Nzz
 
-map W :w<CR>
+map <CR> :w<CR>
+
 "Quick buffer navigation
 nnoremap gb :buffers<CR>:sb<Space>
 
@@ -105,7 +106,8 @@ noremap L $
 " Leader 
 "-----------------------
 "Set the mapleader to ,
-:let mapleader = ","
+" :let mapleader = ","
+let mapleader = "\<Space>"
 
 "Let the CtrlP magic happens
 nmap <Leader>p :CtrlP<CR>
@@ -152,6 +154,7 @@ noremap <S-Down> <C-W>4-
 
 "Tab for completion
 imap <Tab> <C-R>=SuperTab()<CR>
+imap kj <Esc>
 
 "Don't tell me about Exmode 
 noremap Q <nop>
@@ -178,8 +181,6 @@ set  tabstop =2
 set  shiftwidth =2
 set  softtabstop =2
 set  expandtab
-
-set clipboard=unnamedplus
 
 "-----------------------
 " Misc
