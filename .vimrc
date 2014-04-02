@@ -76,6 +76,9 @@ set cursorline
 "Set 8 lines btw the screen top/bottom and the cursor
 set so=50
 
+"Do not code after da limit
+set colorcolumn=80
+
 " Easily reach the paste mode
 set pastetoggle=<C-p>
 
@@ -217,6 +220,8 @@ function! SuperTab()
     return "\<C-n>"
   endif
 endfunction
+
+au BufRead,BufNewFile *.twig set filetype=htmldjango
 
 "Be nice with mutt 
 au BufRead /tmp/mutt-* set tw=72
