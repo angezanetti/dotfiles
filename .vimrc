@@ -83,11 +83,7 @@ set cursorline
 "Set 8 lines btw the screen top/bottom and the cursor
 set so=50
 
-"-----------------------
-" Toggle
-"-----------------------
-"Toggle  Numbers with a cool shortcut 
-nmap <silent><Leader>l :set number! number?<cr>
+set colorcolumn=80
 
 " Easily reach the paste mode
 set pastetoggle=<C-p>
@@ -105,11 +101,18 @@ set smartcase
 nnoremap <silent> n nzz
 nnoremap <silent> N Nzz
 
+
+"Quick buffer navigation
+nnoremap gb :buffers<CR>:sb<Space>
+
+noremap H ^
+noremap L $
 "-----------------------
 " Remap
 "-----------------------
 "Set the mapleader to ,
-:let mapleader = ","
+" :let mapleader = ","
+let mapleader = "\<Space>"
 
 " move the current line up or down
 nmap <C-j> :m+<CR>
@@ -132,6 +135,7 @@ noremap <S-Down> <C-W>4-
 
 "Tab for completion
 imap <Tab> <C-R>=SuperTab()<CR>
+imap kj <Esc>
 
 "Don't tell me about Exmode 
 noremap Q <nop>
@@ -162,6 +166,7 @@ set  shiftwidth =2
 set  softtabstop =2
 set  expandtab
 
+<<<<<<< HEAD
 "-----------------------
 " Undo
 "-----------------------
@@ -170,6 +175,8 @@ if (v:version >=703)
   set undodir=$HOME/.vim/undodir,.
 endif
 " 
+=======
+>>>>>>> ad40fb7b68344e60dedfd240c4d31e0cec546ff6
 "-----------------------
 " Misc
 "-----------------------
@@ -205,6 +212,8 @@ function! SuperTab()
     return "\<C-n>"
   endif
 endfunction
+
+au BufRead,BufNewFile *.twig set filetype=htmldjango
 
 "Be nice with mutt 
 au BufRead /tmp/mutt-* set tw=72
