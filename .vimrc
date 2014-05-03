@@ -5,7 +5,6 @@
 "   version : 2.1
 "
 "**********************************************************************
-execute pathogen#infect()
 "-----------------------
 " General stuff
 "-----------------------
@@ -17,8 +16,6 @@ set nocompatible
 set nowb
 set nobackup
 set noswapfile
-set undofile
-set undodir=$HOME/.vim/undodir
 
 " Set to auto read when a file is changed from the outside
 set autoread
@@ -47,23 +44,33 @@ set matchpairs+=<:>
 " Splits open on the right
 set splitright
 
-set mouse=a
 "-----------------------
 " GUI
 "-----------------------
+" If using a dark background within the editing area and syntax highlighting
 colorscheme molokai
-set guioptions-=m  "remove menu bar
-set guioptions-=T  "remove toolbar
 
 "Make the colors works in a terminal
 set t_Co=256
+
+" Syntax coloring lines that are too long just slows down the world
+set synmaxcol=2048
 
 " Show (partial) command in status line.
 set showcmd
 
 "Always Show the statut line with kool infos in it :)
 set laststatus=2
-" set statusline=\ pwd:\%ry%h\ \%F%m%r%h\ %w\ \ Line:\ %l/%L:%c
+set statusline=\ pwd:\%ry%h\ \%F%m%r%h\ %w\ \ Line:\ %l/%L:%c
+
+if has("gui_running")
+  "Show relative line numbers, usefull for delete & copy stuff
+  set gfn=Monaco:h11
+  "Some tricks for the GUI
+  set guioptions-=T "toggle toolbar for MacVim
+  set guioptions-=L "toggle left scroll bar
+  set guioptions-=r "toggle right scroll bar
+endif
 
 "Auto completion menu
 set  wildmenu
@@ -75,6 +82,12 @@ set cursorline
 
 "Set 8 lines btw the screen top/bottom and the cursor
 set so=50
+
+"-----------------------
+" Toggle
+"-----------------------
+"Toggle  Numbers with a cool shortcut 
+nmap <silent><Leader>l :set number! number?<cr>
 
 " Easily reach the paste mode
 set pastetoggle=<C-p>
@@ -88,55 +101,22 @@ set incsearch
 set ignorecase
 set smartcase
 
-set hlsearch
-nnoremap <Leader>h :nohlsearch<Bar>:echo<CR>
-
 "Keep search pattern at the center of the screen
 nnoremap <silent> n nzz
 nnoremap <silent> N Nzz
 
-map W :w<CR>
-"Quick buffer navigation
-nnoremap gb :buffers<CR>:sb<Space>
-
-noremap H ^
-noremap L $
 "-----------------------
-" Leader 
+" Remap
 "-----------------------
 "Set the mapleader to ,
 :let mapleader = ","
 
-"Let the CtrlP magic happens
-nmap <Leader>p :CtrlP<CR>
-
-" Copy to the clipboard -- need +xterm-clipboard 
-nmap <Leader>y "+y<CR>
-
-" Go to the void bitch :)
-nmap <Leader>d "_d<CR>
-
-"NERDTree appears
-nmap <Leader>n :NERDTree<CR>
-
-"Remove trainliung spaces
-nmap <Leader>t :%s/\s\+$//<CR>
-
-"-----------------------
-" Remap
-"-----------------------
 " move the current line up or down
-" nmap <C-j> :m+<CR>
-" nmap <C-k> :m-2<CR>
-" " move the selected block up or down
-" vmap <C-j> :m'>+<CR> gv
-" vmap <C-k> :m'<-2<CR> gv
-
-" Move between splits
-nmap <C-j> <C-w>j
-nmap <C-k> <C-w>k
-nmap <C-h> <C-w>h
-nmap <C-l> <C-w>l
+nmap <C-j> :m+<CR>
+nmap <C-k> :m-2<CR>
+" move the selected block up or down
+vmap <C-j> :m'>+<CR> gv
+vmap <C-k> :m'<-2<CR> gv
 
 " remap gc to / in the visual mode for the t-comment plugin
 vmap / gc
@@ -155,7 +135,6 @@ imap <Tab> <C-R>=SuperTab()<CR>
 
 "Don't tell me about Exmode 
 noremap Q <nop>
-noremap K <nop>
 
 "Indentation with Tab
 nmap <Tab> >>
@@ -166,8 +145,12 @@ vmap <S-Tab> <gv
 "fix old vi function
 map Y y$
 
-" Indentation
+inoremap kj <Esc>
+noremap jk <Esc>
+map W :w<CR>
+
 "-----------------------
+" Indentation
 "-----------------------
 set autoindent
 set smartindent
@@ -179,8 +162,14 @@ set  shiftwidth =2
 set  softtabstop =2
 set  expandtab
 
-set clipboard=unnamedplus
-
+"-----------------------
+" Undo
+"-----------------------
+if (v:version >=703)
+  set undofile
+  set undodir=$HOME/.vim/undodir,.
+endif
+" 
 "-----------------------
 " Misc
 "-----------------------
@@ -219,5 +208,3 @@ endfunction
 
 "Be nice with mutt 
 au BufRead /tmp/mutt-* set tw=72
-" Ctrlp stuff
-set runtimepath^=~/.vim/bundle/ctrlp.vim
