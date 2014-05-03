@@ -7,15 +7,8 @@ servers = (
     ssl_verify = "no";
   },
   {
-    address = "irc.telecomix.org";
-    chatnet = "telecomix";
-    port = "9999";
-    use_ssl = "yes";
-    ssl_verify = "no";
-  },
-  {
-    address = "irc.wnh.me";
-    chatnet = "WNH";
+    address = "irc.geeknode.org";
+    chatnet = "geeknode";
     port = "6697";
     use_ssl = "yes";
     ssl_verify = "no";
@@ -40,25 +33,36 @@ servers = (
     port = "6660";
     use_ssl = "yes";
     ssl_verify = "no";
+  },
+  {
+    address = "irc.mozilla.org";
+    chatnet = "mozilla";
+    port = "6697";
+    use_ssl = "yes";
+    ssl_verify = "no";
   }
 );
 chatnets = {
   freenode = {
     type = "IRC";
-    nick = "Ang3";
+    nick = "angezanetti";
     autosendcmd = "/unquery NickServ";
   };
+  mozilla = { type = "IRC"; nick = "angezanetti"; };
+  geeknode = { type = "IRC"; nick = "angezanetti"; };
+  telecomix = { type = "IRC"; };
+  WNH = { type = "IRC"; };
+  oftc = { type = "IRC"; };
 };
 channels = (
   { name = "#coworkinglille"; chatnet = "freenode"; autojoin = "Yes"; },
-  { name = "#wearecoworkers"; chatnet = "freenode"; autojoin = "Yes"; },
-  { name = "#webgl"; chatnet = "freenode"; autojoin = "Yes"; },
-  { name = "#telecomix"; chatnet = "telecomix"; autojoin = "Yes"; },
+  { name = "#franceJs"; chatnet = "freenode"; autojoin = "Yes"; },
+  { name = "#silex-php"; chatnet = "freenode"; autojoin = "Yes"; },
+  { name = "#tuppervim"; chatnet = "mozilla"; autojoin = "Yes"; },
   { name = "#hackbbs"; chatnet = "hackbbs"; autojoin = "Yes"; },
-  { name = "#dn"; chatnet = "WNH"; autojoin = "Yes"; },
   { name = "#reflets"; chatnet = "reflets"; autojoin = "Yes"; },
-  { name = "#tor-dev"; chatnet = "oftc"; autojoin = "Yes"; },
-  { name = "#hackbbs"; chatnet = "hack"; autojoin = "Yes"; }
+  { name = "#awesome"; chatnet = "oftc"; autojoin = "Yes"; },
+  { name = "#fdn"; chatnet = "geeknode"; autojoin = "Yes"; }
 );
 
 aliases = {
@@ -227,14 +231,17 @@ statusbar = {
         barend = { priority = "100"; alignment = "right"; };
       };
     };
+    awl_1 = {
+      items = {
+        barstart = { priority = "100"; };
+        awl_1 = { };
+        barend = { priority = "100"; alignment = "right"; };
+      };
+    };
   };
 };
 settings = {
-  core = {
-    real_name = "X";
-    user_name = "x";
-    nick = "x";
-  };
+  core = { real_name = "X"; user_name = "x"; nick = "x"; };
   "fe-text" = { actlist_sort = "refnum"; };
   ignores = { level = "CTCPS"; };
   lookandfeel = { scroll = "ON"; };
@@ -245,17 +252,125 @@ settings = {
     awl_block = "-14";
     awl_display_key_active = "$Q%K|$N%n $H%U$C%n$S";
     awl_display_nokey = "[$N]$H$C$S";
+    "fe-common/xmpp" = {
+      xmpp_status_window = "yes";
+      xmpp_send_composing = "no";
+    };
+    "xmpp/core" = { xmpp_set_nick_as_username = "yes"; };
   };
 };
-ignores = (
-  { level = "JOINS PARTS QUITS"; network = "telecomix"; },
-  {
-    level = "JOINS PARTS QUITS";
-    channels = ( "#telecomix" );
-    network = "telecomix";
-  },
-  { mask = "UnGarage"; level = "ALL"; },
-  { mask = "lulztomte"; level = "ALL"; }
-);
-windows = { 1 = { immortal = "yes"; name = "(status)"; level = "ALL"; }; };
+ignores = ( { level = "PARTS"; } );
 
+windows = {
+  1 = { immortal = "yes"; name = "(status)"; level = "ALL"; };
+  2 = {
+    items = (
+      {
+        type = "CHANNEL";
+        chat_type = "IRC";
+        name = "#coworkinglille";
+        tag = "freenode";
+      }
+    );
+  };
+  3 = {
+    items = (
+      {
+        type = "CHANNEL";
+        chat_type = "IRC";
+        name = "#franceJs";
+        tag = "freenode";
+      }
+    );
+  };
+  4 = {
+    items = (
+      {
+        type = "CHANNEL";
+        chat_type = "IRC";
+        name = "#sells";
+        tag = "freenode";
+      }
+    );
+  };
+  5 = {
+    items = (
+      {
+        type = "CHANNEL";
+        chat_type = "IRC";
+        name = "#tupperVim";
+        tag = "mozilla";
+      }
+    );
+  };
+  6 = {
+    items = (
+      {
+        type = "CHANNEL";
+        chat_type = "IRC";
+        name = "#silex-php";
+        tag = "freenode";
+      }
+    );
+  };
+  7 = {
+    items = (
+      { type = "CHANNEL"; chat_type = "IRC"; name = "#dn"; tag = "WNH"; }
+    );
+  };
+  8 = {
+    items = (
+      {
+        type = "CHANNEL";
+        chat_type = "IRC";
+        name = "#awesome";
+        tag = "oftc";
+      }
+    );
+  };
+  9 = {
+    items = (
+      { 
+        type = "CHANNEL";
+        chat_type = "IRC";
+        name = "#tor";
+        tag = "oftc";
+      }
+    );
+  };
+  10 = {
+    items = (
+      {
+        type = "CHANNEL";
+        chat_type = "IRC";
+        name = "#symfony";
+        tag = "freenode";
+      }
+    );
+  };
+  11 = {
+    items = (
+      {
+        type = "CHANNEL";
+        chat_type = "IRC";
+        name = "#symfony-fr";
+        tag = "freenode";
+      }
+    );
+  };
+  12 = {
+    items = (
+      {
+        type = "CHANNEL";
+        chat_type = "IRC";
+        name = "#irssi";
+        tag = "freenode";
+      }
+    );
+  };
+  13 = { name = "hilight"; sticky = "yes"; };
+};
+mainwindows = {
+  1 = { first_line = "8"; lines = "35"; };
+  13 = { first_line = "1"; lines = "7"; };
+};
