@@ -1,0 +1,21 @@
+## Receive options.
+set imap_user=contact@angezanetti.com
+set folder      = imaps://ssl0.ovh.net/
+set spoolfile = +INBOX
+set postponed = +Drafts
+set record = +Sent
+
+## Send options.
+set my_user=contact@angezanetti.com
+set realname = 'Xavier | AngeZanetti'
+set from = 'contact@angezanetti.com'
+set use_from = yes
+
+set smtp_url=smtps://$my_user@ssl0.ovh.net
+set signature="Xavier Coiffard"
+# Connection options
+set ssl_force_tls = yes
+unset ssl_starttls
+
+## Hook -- IMPORTANT!
+account-hook $folder "set imap_user=contact@angezanetti.com
