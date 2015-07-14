@@ -8,8 +8,16 @@ unset imap_passive
 
 ## MULTI ACCOUNT SUPPORT #####
 # source "~/.mutt/angezanetti"
+# folder-hook contact@angezanetti.com/ 'source ~/.mutt/angezanetti'
+
 source "~/.mutt/coiffard"
+# folder-hook xavier@coiffard.net/ 'source ~/.mutt/coiffard'
+# 
 # source "~/.mutt/gmail"
+# folder-hook xavier.coiffard@gmail.com/ 'source ~/.mutt/gmail'
+
+# Choose which account should be loaded on startup, uncomment only one of these:
+# source ~/.mutt/coiffard
 
 ### PREFERENCES #####
 set editor=vim
@@ -56,5 +64,7 @@ source .mutt/colors
 macro index,pager <f2> '<enter-command>source ~/.mutt/angezanetti<enter><change-folder>!<enter>'
 macro index,pager <f3> '<enter-command>source ~/.mutt/coiffard<enter><change-folder>!<enter>'
 macro index,pager <f4> '<enter-command>source ~/.mutt/gmail<enter><change-folder>!<enter>'
+# macro index,pager <f2> '<sync-mailbox><enter-command>source ~/.mutt/coiffard<enter><change-folder>!<enter>'
+# macro index,pager <f3> '<sync-mailbox><enter-command>source ~/.mutt/angezanetti<enter><change-folder>!<enter>'
 # macro index,pager <f4> '<sync-mailbox><enter-command>source ~/.mutt/gmail<enter><change-folder>!<enter>'
-macro index 'c' '<change-folder>?<change-dir><home>^K=<enter>'
+# macro index 'c' '<change-folder>?<change-dir><home>^K=<enter>'

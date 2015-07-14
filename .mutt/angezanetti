@@ -18,4 +18,4 @@ set ssl_force_tls = yes
 unset ssl_starttls
 
 ## Hook -- IMPORTANT!
-account-hook $folder "set imap_user=contact@angezanetti.com
+account-hook contact@angezanetti.com/ "set imap_user=contact@angezanetti.com
