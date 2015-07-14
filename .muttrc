@@ -33,6 +33,7 @@ bind index G last-entry
 bind index R group-reply
 bind attach <return> view-mailcap
 
+auto_view text/html
 set pager_index_lines=6
 set wait_key = no
 unset move
