@@ -12,43 +12,42 @@ require("vicious")
 require("debian.menu")
 require("io")
 
+ require("menubar")
+  menubar.cache_entries = true
+  menubar.app_folders = { "/usr/share/applications/" }
+  menubar.show_categories = true   -- Change to false if you want only programs to appear in the menu
+  menubar.set_icon_theme("theme name")
 -- Sound CArd function
 cardid  = 0
 channel = "Master"
 function volume (mode, widget)
-    local cardid  = 0
-    local channel = "Master"
-    if mode == "update" then
-        local status = io.popen("amixer -c " .. cardid .. " -- sget " .. channel):read("*all")
-        
-        local volume = tonumber(string.match(status, "(%d?%d?%d)%%"))
+  if mode == "update" then
+              local fd = io.popen("amixer -c " .. cardid .. " -- sget " .. channel)
+              local status = fd:read("*all")
+              fd:close()
 
-        status = string.match(status, "%[(o[^%]]*)%]")
+    local volume = string.match(status, "(%d?%d?%d)%%")
+    volume = string.format("% 3d", volume)
 
-        local color = "#FFFFFF"
-        if string.find(status, "on", 1, true) then
-             color = "#FFFFFF"
-        end
-        status = ""
-        for i = 1, math.floor(volume / 10) do
-            status = status .. "|"
-        end
-        for i = math.floor(volume / 10) + 1, 10 do
-            status = status .. "-"
-        end
-        status = "-[" ..status .. "]+"
-        widget.text = "<span color=\"" .. color .. "\">" .. status .. "</span>|"
-    elseif mode == "up" then
-        os.execute("amixer -q -c " .. cardid .. " sset " .. channel .. " 5%+")
-        volume("update", widget)
-    elseif mode == "down" then
-        os.execute("amixer -q -c " .. cardid .. " sset " .. channel .. " 5%-")
-        volume("update", widget)
+    status = string.match(status, "%[(o[^%]]*)%]")
+
+    if string.find(status, "on", 1, true) then
+      volume = "♪" .. volume .. "%"
     else
-        os.execute("amixer -c " .. cardid .. " sset " .. channel .. " toggle")
-        volume("update", widget)
+      volume = volume .. "M"
     end
-end
+    widget.text = volume
+  elseif mode == "up" then
+    io.popen("amixer -q -c " .. cardid .. " sset " .. channel .. " 5%+"):read("*all")
+    volume("update", widget)
+  elseif mode == "down" then
+    io.popen("amixer -q -c " .. cardid .. " sset " .. channel .. " 5%-"):read("*all")
+    volume("update", widget)
+  else
+    io.popen("amixer -c " .. cardid .. " sset " .. channel .. " toggle"):read("*all")
+    volume("update", widget)
+  end
+ end
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
@@ -77,7 +76,8 @@ end
 -- {{{ Variable definitions
 -- Themes define colours, icons, and wallpapers
 --beautiful.init("/usr/share/awesome/themes/default/theme.lua")
-beautiful.init("/home/xavier/.config/awesome/themes/molokai/theme.lua")
+--beautiful.init("/home/xavier/.config/awesome/themes/molokai/theme.lua")
+beautiful.init("/home/xavier/.config/awesome/themes/darkcity/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
 terminal = "x-terminal-emulator"
@@ -119,12 +119,13 @@ myawesomemenu = {
    --{ "manual", terminal .. " -e man awesome" },
    --{ "edit config", editor_cmd .. " " .. awesome.conffile },
    { "restart", awesome.restart },
-   { "suspend", awesome.suspend },
-   { "quit", awesome.quit }
+   { "suspend", "sudo pm-suspend" },
+   {"lock", "gnome-screensaver-command --lock"},
+   {"quit", awesome.quit}
 }
 
 mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
-                                    { "Debian", debian.menu.Debian_menu.Debian },
+                                    --{ "Debian", debian.menu.Debian_menu.Debian },
                                     --{ "open terminal", terminal }
                                   }
                         })
@@ -135,7 +136,8 @@ mylauncher = awful.widget.launcher({ image = image(beautiful.awesome_icon),
 
 -- {{{ Wibox
 -- Create a textclock widget
-mytextclock = awful.widget.textclock({ align = "right" })
+--mytextclock = awful.widget.textclock({ align = "right" })
+mytextclock = awful.widget.textclock({ align = "right" }, ' %d.%m.%Y ~ <span color="#aaa">%H:%M </span>', 5)
 
 -- Create a systray
 mysystray = widget({ type = "systray" })
@@ -149,33 +151,33 @@ batwidget = widget({ type = "textbox" })
 vicious.register(batwidget, vicious.widgets.bat,
   function (widget, args)
       if args[1] ~= "-" then
-          return "Bat: <span color='#9acd32'>" .. args[2] .. "%</span>"
+          return "⚡: <span color='#9acd32'>" .. args[2] .. "%</span>"
       elseif  args[2] >= 10 and args[1] == "-" then
           return "Bat: " .. args[2] .. "%"
       elseif args[2] < 10 and args[1] == "-" then
           naughty.notify({ title = "Battery Warning", text = "Battery low! "..args[2].."% left!\nBetter get some power.", timeout = 10, position = "top_right", fg = beautiful.fg_urgent, bg = beautiful.bg_urgent })
-          return "Bat: <span color='#ff4b4b'>" .. args[2] .. "%</span>"
+          return "⚡: <span color='#ff4b4b'>" .. args[2] .. "%</span>"
       end
   end, 23, "BAT0" )
 
 -- }}}
-
-
 -- CPU widget
 cpuwidget = widget({ type = "textbox" })
-vicious.register(cpuwidget, vicious.widgets.cpu, "CPU : $1%")
+--vicious.register(cpuwidget, vicious.widgets.cpu, "⾝ : $1%")
+vicious.register(cpuwidget, vicious.widgets.cpu, " $1%")
 
 -- RAM widget
 memwidget = widget({ type = "textbox" })
-vicious.register(memwidget, vicious.widgets.mem, "RAM : $1%", 13)
+vicious.register(memwidget, vicious.widgets.mem, "$1% |", 13)
 
 --volume
 tb_volume = widget({ type = "textbox", name = "tb_volume", align = "right" })
-volume("update", tb_volume)
+volume("update",  tb_volume)
+
 -- Separators
 separator = widget({ type = "textbox" })
-separator.text = "  |  "
- 
+separator.text = "   "
+
 -- Create a wibox for each screen and add it
 mywibox = {}
 mypromptbox = {}
@@ -251,12 +253,12 @@ for s = 1, screen.count() do
             layout = awful.widget.layout.horizontal.leftright
         },
         mylayoutbox[s],
-        mytextclock,
+        mytextclock, separator,
         tb_volume,separator,
-        --batterywidget, separator,
-      batwidget, separator,
-        cpuwidget, separator,
-        memwidget, separator,
+        batwidget, separator,
+        cpuwidget,
+        memwidget,separator,
+        ip_addr,
         s == 1 and mysystray or nil,
         mytasklist[s],
         layout = awful.widget.layout.horizontal.rightleft
@@ -267,8 +269,8 @@ end
 -- {{{ Mouse bindings
 root.buttons(awful.util.table.join(
     --awful.button({ }, 3, function () mymainmenu:toggle() end),
-    awful.button({ }, 4, awful.tag.viewnext),
-    awful.button({ }, 5, awful.tag.viewprev)
+    --awful.button({ }, 4, awful.tag.viewnext),
+    --awful.button({ }, 5, awful.tag.viewprev)
 ))
 -- }}}
 
@@ -325,6 +327,7 @@ globalkeys = awful.util.table.join(
 
     -- Prompt
     awful.key({ modkey },            "r",     function () mypromptbox[mouse.screen]:run() end),
+    awful.key({ modkey ,"Shift"},    "r",     function () menubar.show() end),
 
     awful.key({ modkey }, "x",
               function ()
