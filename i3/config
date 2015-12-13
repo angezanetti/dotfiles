@@ -1,9 +1,9 @@
 ################
 ## AUTOSTART STUFF #
 #################
-exec --no-startup-id feh --bg-scale ~/Images/rose.png
+exec --no-startup-id feh --bg-scale ~/Images/automne.jpg
 exec --no-startup-id nm-applet
-exec --no-startup-id setxkbmap fr
+exec --no-startup-id "setxkbmap fr"
 ####
 set $mod Mod4
 
