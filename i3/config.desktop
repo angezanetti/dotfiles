@@ -1,7 +1,6 @@
 ################
 ## AUTOSTART STUFF #
 #################
-<<<<<<< HEAD:i3/config.desktop
 exec --no-startup-id feh --bg-scale ~/Images/SELLSecure.png
 exec --no-startup-id xkbcomp -w9 /home/xavier/lafayette.xkb $DISPLAY
 exec --no-startup-id gsettings set org.gnome.desktop.background show-desktop-icons false;
@@ -17,11 +16,6 @@ floating_modifier $mod
 
 # start a terminal
 bindsym $mod+Return exec i3-sensible-terminal
-
-# Make my day-to-day apps easy to launch
-bindsym $mod+i exec firefox 
-bindsym $mod+n exec nautilus 
-bindsym $mod+t exec thunderbird 
 
 # kill focused window
 bindsym $mod+Shift+c kill
@@ -71,7 +65,6 @@ bindsym $mod+q focus parent
 # focus the child container
 #bindsym $mod+d focus child
 
-<<<<<<< HEAD:i3/config.desktop
 # switch to workspace
 bindsym $mod+1 workspace 1
 bindsym $mod+2 workspace 2
@@ -83,19 +76,6 @@ bindsym $mod+7 workspace 7
 bindsym $mod+8 workspace 8
 bindsym $mod+9 workspace 9
 bindsym $mod+0 workspace 10
-=======
-# switch to workspace - with the French keyboard
-bindsym $mod+ampersand workspace 1
-bindsym $mod+eacute workspace 2
-bindsym $mod+quotedbl workspace 3
-bindsym $mod+apostrophe workspace 4
-bindsym $mod+parenleft workspace 5
-bindsym $mod+section workspace 6
-bindsym $mod+egrave workspace 7
-bindsym $mod+exclam workspace 8
-bindsym $mod+ccedilla workspace 9
-bindsym $mod+agrave workspace 10
->>>>>>> 44b472dc93041f1c833a401d87c56fec0405ea6a:i3/config
 
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace 1
@@ -116,12 +96,9 @@ bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
 # bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
-<<<<<<< HEAD:i3/config.desktop
 # gmrun
 bindsym $mod+t exec nautilus
 
-=======
->>>>>>> 44b472dc93041f1c833a401d87c56fec0405ea6a:i3/config
 # resize window (you can also use the mouse for that)
 mode "resize" {
         # These bindings trigger as soon as you enter the resize mode
