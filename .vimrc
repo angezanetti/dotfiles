@@ -1,154 +1,88 @@
-"********************************************************************
-"
-" Made by @AngeZanetti - 2013
-"   under Beerware licence
-"   version : 2.2
-"
-"**********************************************************************
-execute pathogen#infect()
-"-----------------------
-" General stuff
-"-----------------------
+syntax on
 
-" No Vi compatibility
-set nocompatible
-
-" Do not keep a backup file.
-set nowb
-set nobackup
-set noswapfile
-set undofile
-set undodir=$HOME/.vim/undodir
-
-" Set to auto read when a file is changed from the outside
-set autoread
-
-" Use UTF-8 as the default buffer encoding
-set enc=utf-8
-
-"Set the lenght of the history...
-set history=300
-
-" No sound on errors plz
-set noerrorbells
-set novisualbell
-set t_vb=
-set tm=500
-
-" Show matching brackets.
-set showmatch
-
-" We have a fast terminal
+" ===========================================================
+" General vim settings.
+" ===========================================================
+set autoindent        " Indented text
+set autoread          " Pick up external changes to files
+set autowrite         " Write files when navigating with :next/:previous
+set background=dark
+set backspace=indent,eol,start
+set belloff=all       " Bells are annoying
+set infercase         " Smart casing when completing
+set ignorecase        " Search in case-insensitively
+set incsearch         " Go to search results immediately
+set laststatus=2      " We want a statusline
+set mouse=a           " Mouse support in the terminal
+set mousehide         " Hide mouse when typing text
+set nobackup          " No backup files
+set nocompatible      " No Vi support
+set shiftwidth=4
+set smarttab
+set synmaxcol=200     " Only syntax highlight for 200 chars (for performance)
+set t_Co=256          " 256 color support
+set tabstop=4
+set textwidth=79
 set ttyfast
+set updatetime=1000
+set viminfo=          " No backups
+set wildignore+=.git/**,_build/**,build/**,cache/**,node_modules/**,lib/**,log/**,tmp/**
+set wildmenu
+set wildmode=full
 
-" have % bounce between angled brackets, as well as t'other kinds:
-set matchpairs+=<:>
 
-" Splits open on the right
-set splitright
+if has('unnamedplus')
+    set clipboard=unnamed,unnamedplus
+else
+    set clipboard=unnamed
+endif
 
-set mouse=a
-"-----------------------
-" GUI
-"-----------------------
-" colorscheme molokai
-colorscheme PaperColor-Dark
-set guioptions-=m  "remove menu bar
-set guioptions-=T  "remove toolbar
+if has("nvim")
+    " Set 'guicursor' explicitly; needed for shape-changing to work in xterm.
+    " set guicursor=n-v-c-sm:block-Cursor,i-ci-ve:ver25-Cursor,r-cr-o:hor20-Cursor
+    set guicursor=n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20
+    set inccommand=nosplit
+    set list
+    set listchars=tab:\ \ ,trail:-
+else
+    set cryptmethod=blowfish2
+    set listchars=eol:$,tab:>-,trail:-
+    set ttymouse=xterm2
+endif
 
-"Make the colors works in a terminal
-set t_Co=256
+" ===========================================================
+" FUNCTIONS
+" ===========================================================
+function! NERDTreeRefresh()
+    if &filetype == "nerdtree"
+        silent exe substitute(mapcheck("R"), "<CR>", "", "")
+    endif
+endfunction
 
-" Show (partial) command in status line.
-set showcmd
-
-"Always Show the statut line with kool infos in it :)
-set laststatus=2
-" set statusline=\ pwd:\%ry%h\ \%F%m%r%h\ %w\ \ Line:\ %l/%L:%c
-
-"Auto completion menu
-set  wildmenu
-set  wildmode =list:longest,list:full    "show all the possibilities
-set  wildignore =*.o,*.r,*.so,*.sl,*.tar,*.tgz    "ignore certain type of files for the autocompl.
-
-" Hihlight the cursor line
-set cursorline
-
-"Set 8 lines btw the screen top/bottom and the cursor
-set so=50
-
-"Do not code after da limit
-set colorcolumn=85
-
-" Easily reach the paste mode
-set pastetoggle=<C-p>
-
-set fileformat=unix
-set fileformats=unix,dos
-"set nobinary
-"-----------------------
-" Search
-"-----------------------
-"Display the match for a search pattern when halfway typing it.
-set incsearch
-"Ignore case when searching
-set ignorecase
-set smartcase
-
-set hlsearch
+function! SuperTab()
+  if (strpart(getline('.'),col('.')-2,1)=~'^\W\?$')
+    return "\<Tab>"
+  else
+    return "\<C-n>"
+  endif
+endfunction
+"===========================================================
+" MAPPINGS
+"===========================================================
+" Y should behave like D and C, from cursor till end of line.
+noremap Y y$
+" Center search matches when navigating.
+noremap n nzz
+noremap N Nzz
 nnoremap <Leader>h :nohlsearch<Bar>:echo<CR>
-
-"Keep search pattern at the center of the screen
-nnoremap <silent> n nzz
-nnoremap <silent> N Nzz
-
 map <CR> :w<CR>
-
-"-----------------------
-" Leader
-"-----------------------
-"Set the mapleader to ,
-" :let mapleader = ","
+imap kj <Esc>
 let mapleader = "\<Space>"
-
-" Copy to the clipboard -- need +xterm-clipboard
-nmap <Leader>y "+y<CR>
-
-" Go to the void bitch :)
-nmap <Leader>d "_d<CR>
-
+set pastetoggle=<C-p>
 "NERDTree appears
 nmap <Leader>n :NERDTree<CR>
-
-"Remove trainliung spaces
+"Remove trailing spaces
 nmap <Leader>t :%s/\s\+$//<CR>
-
-"-----------------------
-" Remap
-"-----------------------
-
-" Move between splits
-nmap <C-j> <C-w>j
-nmap <C-k> <C-w>k
-nmap <C-h> <C-w>h
-nmap <C-l> <C-w>l
-
-" remap gc to / in the visual mode for the t-comment plugin
-vmap / gc
-
-" map :w !sudo tee % to easier command, to gain root privilege when edit files
-cmap w!! %!sudo tee > /dev/null %
-
-" resize windows with arrows & Shift
-noremap <S-Left> <C-W>4<
-noremap <S-Right> <C-W>4>
-noremap <S-Up> <C-W>4+
-noremap <S-Down> <C-W>4-
-
-"Tab for completion
-imap <Tab> <C-R>=SuperTab()<CR>
-imap kj <Esc>
-
 "Don't tell me about Exmode
 noremap Q <nop>
 noremap K <nop>
@@ -158,89 +92,97 @@ nmap <Tab> >>
 nmap <S-Tab> <<
 vmap <Tab> >gv
 vmap <S-Tab> <gv
+"Tab for completion
+imap <Tab> <C-R>=SuperTab()<CR>
 
-"fix old vi function
-map Y y$
-
-" Indentation
-"-----------------------
-"-----------------------
-set autoindent
-set smartindent
-set backspace=indent,eol,start
-
-" Convert tabs to spaces
-set  tabstop =4
-set  shiftwidth =4
-set  softtabstop =4
-set  expandtab
-
-"-----------------------
-" Misc
-"-----------------------
-"enable plugins
-filetype plugin on
-filetype indent on
-"source $MYVIMRC reloads the saved $MYVIMRC
-nmap <Leader>s :source $MYVIMRC<CR>
-"opens $MYVIMRC for editing, or use :tabedit $MYVIMRC
-nmap <Leader>v :vs $MYVIMRC<CR>
-
-"Jump to next error
-nmap <Leader>e :lnext<CR>
-
-"Shoz me CtrlP
-nmap <Leader>p :CtrlP<CR>
-
-if has("syntax")
-  syntax on
+if has("nvim")
+    " Make escape work in the Neovim terminal.
+    tnoremap <Esc> <C-\><C-n>
+endif
+"-----------------------------
+" Navigation mappings
+"-----------------------------
+nnoremap <C-h>     <C-w>h
+nnoremap <C-j>     <C-w>j
+nnoremap <C-k>     <C-w>k
+nnoremap <C-l>     <C-w>l
+if has("nvim")
+    " Use same mappings as above to navigate Neovim terminal splits.
+    tnoremap <C-h> <C-\><C-N><C-w>h
+    tnoremap <C-j> <C-\><C-N><C-w>j
+    tnoremap <C-k> <C-\><C-N><C-w>k
+    tnoremap <C-l> <C-\><C-N><C-w>l
 endif
 
-set encoding=utf-8
-setglobal fileencoding=utf-8
+"===========================================================
+" PLUGINS
+"===========================================================
 
-if has("autocmd")
-  augroup vimrc_cmd
-    au!
-    " Add some cool IDE function to PHP editing
-    autocmd BufRead,BufNewFile,FileReadPost *.php source ~/.vim/php.vim
-    autocmd BufRead,BufNewFile,FileReadPost *.js source ~/.vim/js.vim
-    "Add my special todolist syntax :p
-    autocmd BufRead,BufNewFile *.todo set filetype=todo
-    " automatically reload vimrc when it's saved
-    au BufWritePost .vimrc so ~/.vimrc
-  augroup END
+" Automatically install vim-plug and run PlugInstall if vim-plug is not found.
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
+" Initialize vim-plug.
+call plug#begin('~/.vim/plugged')
+Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+    let NERDTreeStatusline            = " NERDTree "
+    noremap <silent> <leader>n        :NERDTreeToggle<CR> <C-w>=
+    noremap <silent> <leader>f        :NERDTreeFind<CR> <C-w>=
+	autocmd! BufEnter * call NERDTreeRefresh()
 
-function! SuperTab()
-  if (strpart(getline('.'),col('.')-2,1)=~'^\W\?$')
-    return "\<Tab>"
-  else
-    return "\<C-n>"
-  endif
-endfunction
+Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': 'NERDTreeToggle' }
+	let g:NERDTreeUpdateOnCursorHold = 0
+Plug 'tpope/vim-commentary'
+Plug 'mhinz/vim-janah'
+Plug 'vim-airline/vim-airline'
+Plug 'w0rp/ale'
+	let g:airline#extensions#ale#enabled = 1
 
-au BufRead,BufNewFile *.twig set filetype=htmldjango
+call plug#end()
 
-"Be nice with mutt
-au BufRead /tmp/mutt-* set tw=72
-" Ctrlp stuff
-set runtimepath^=~/.vim/bundle/ctrlp.vim
-let g:syntastic_always_populate_loc_list = 1
+"===========================================================
+" AUTOCMDS
+"===========================================================
 
-let g:vdebug_options = {}
-let g:vdebug_options["port"] = 9001
+" Custom settings per language by file type.
+"
+augroup languageCustomizationsByType
+    " Note, 'autocmd!' is used to clear out any existing definitions in
+    " this auto-group. This prevents duplicate entries upon a live vimrc
+    " reload.
+    autocmd!
+    autocmd FileType c,cpp setlocal cindent foldmethod=syntax
+    autocmd FileType coffee setlocal shiftwidth=2
+    autocmd FileType css setlocal shiftwidth=2
+    autocmd FileType css,scss let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
+    autocmd FileType eelixir setlocal matchpairs=(:),{:},[:]
+    autocmd FileType eruby setlocal formatoptions=cq shiftwidth=2 matchpairs=(:),{:},[:]
+    " Setup indent lines for tab formatted Golang code. Note, the IndentLine 
+    " plugin will not show markers for tab formatted code, so we need to mimic
+    " what that plugin does here using listchars and highlighting.
+    autocmd FileType go setlocal list listchars=tab:\¦\ 
+    autocmd FileType go highlight SpecialKey ctermfg=234 guifg=#1c1c1c
+    " Match it navigation is broken for HTML, this Stack Overflow tip fixes it.
+    autocmd FileType html let b:match_words = '<\(\w\w*\):</\1,{:}'
+    autocmd FileType html setlocal shiftwidth=2 textwidth=999
+    autocmd FileType javascript setlocal shiftwidth=2
+    autocmd FileType javascript.jsx setlocal formatoptions=cq
+    autocmd FileType json setlocal conceallevel=0
+    autocmd FileType markdown setlocal formatoptions=tqln
+    autocmd FileType markdown syntax sync fromstart
+    autocmd FileType ruby setlocal formatoptions=cq shiftwidth=2 makeprg=ruby\ -w\ %
+    autocmd FileType scss let g:indentLine_faster=0
+    autocmd FileType scss setlocal shiftwidth=2
+    autocmd FileType sh setlocal textwidth=999
+    autocmd FileType vim setlocal textwidth=999
+    autocmd FileType xml setlocal shiftwidth=2 textwidth=999
+    autocmd FileType yaml setlocal shiftwidth=2 textwidth=999
+augroup END
 
-let g:ctrlp_cmd = 'CtrlP'
-let g:ctrlp_working_path_mode = 'ra'
-let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --hidden
-      \ --ignore .git
-      \ --ignore .svn
-      \ --ignore .hg
-      \ --ignore .DS_Store
-      \ --ignore "**/*.pyc"
-      \ --ignore "**/cache"
-      \ --ignore "**/build"
-      \ --ignore "**/vendor"
-      \ -g ""'
+"===========================================================
+" COLOR SCHEME
+"===========================================================
+colorscheme janah
