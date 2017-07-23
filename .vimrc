@@ -148,6 +148,9 @@ Plug 'morhetz/gruvbox'
 Plug 'vim-airline/vim-airline'
 Plug 'w0rp/ale'
 	let g:airline#extensions#ale#enabled = 1
+Plug 'ctrlpvim/ctrlp.vim'
+	let g:ctrlp_map = '<c-p>'
+	let g:ctrlp_cmd = 'CtrlP'
 
 call plug#end()
 
