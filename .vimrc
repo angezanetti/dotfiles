@@ -20,6 +20,7 @@ set nocompatible      " No Vi support
 set shiftwidth=4
 set smarttab
 set synmaxcol=200     " Only syntax highlight for 200 chars (for performance)
+set colorcolumn=85    " You should not code after that limit
 set t_Co=256          " 256 color support
 set tabstop=4
 set textwidth=79
@@ -66,33 +67,37 @@ function! SuperTab()
     return "\<C-n>"
   endif
 endfunction
+
 "===========================================================
 " MAPPINGS
 "===========================================================
-" Y should behave like D and C, from cursor till end of line.
-noremap Y y$
+noremap Y y$ "Y should behave like D and C, from cursor till end of line.
 " Center search matches when navigating.
 noremap n nzz
 noremap N Nzz
 nnoremap <Leader>h :nohlsearch<Bar>:echo<CR>
+" usefull shortcuts to save/Escape
 map <CR> :w<CR>
 imap kj <Esc>
-let mapleader = "\<Space>"
 set pastetoggle=<C-p>
-"NERDTree appears
-nmap <Leader>n :NERDTree<CR>
-"Remove trailing spaces
-nmap <Leader>t :%s/\s\+$//<CR>
+
 "Don't tell me about Exmode
 noremap Q <nop>
 noremap K <nop>
 
-"Indentation with Tab
+"---------------
+" Leader Stuff
+"---------------
+let mapleader = "\<Space>"
+nmap <Leader>t :%s/\s\+$//<CR>    "Remove trailing spaces
+nmap <Leader>s :source $MYVIMRC<CR> "source $MYVIMRC reloads the saved $MYVIMRC
+nmap <Leader>v :vs ~/.vimrc<CR> "opens $MYVIMRC for editing, or use :tabedit $MYVIMRC
+
+" Complete with tabs
 nmap <Tab> >>
 nmap <S-Tab> <<
 vmap <Tab> >gv
 vmap <S-Tab> <gv
-"Tab for completion
 imap <Tab> <C-R>=SuperTab()<CR>
 
 if has("nvim")
@@ -128,15 +133,18 @@ endif
 " Initialize vim-plug.
 call plug#begin('~/.vim/plugged')
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+    " Replace arrows with text characters; not all terminal and font
+    " combinations provide arrows.
+    let NERDTreeHijackNetrw           = 0
     let NERDTreeStatusline            = " NERDTree "
     noremap <silent> <leader>n        :NERDTreeToggle<CR> <C-w>=
     noremap <silent> <leader>f        :NERDTreeFind<CR> <C-w>=
-	autocmd! BufEnter * call NERDTreeRefresh()
+autocmd! BufEnter * call NERDTreeRefresh()
 
 Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': 'NERDTreeToggle' }
 	let g:NERDTreeUpdateOnCursorHold = 0
 Plug 'tpope/vim-commentary'
-Plug 'mhinz/vim-janah'
+Plug 'morhetz/gruvbox'
 Plug 'vim-airline/vim-airline'
 Plug 'w0rp/ale'
 	let g:airline#extensions#ale#enabled = 1
@@ -154,17 +162,9 @@ augroup languageCustomizationsByType
     " this auto-group. This prevents duplicate entries upon a live vimrc
     " reload.
     autocmd!
-    autocmd FileType c,cpp setlocal cindent foldmethod=syntax
-    autocmd FileType coffee setlocal shiftwidth=2
     autocmd FileType css setlocal shiftwidth=2
     autocmd FileType css,scss let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
     autocmd FileType eelixir setlocal matchpairs=(:),{:},[:]
-    autocmd FileType eruby setlocal formatoptions=cq shiftwidth=2 matchpairs=(:),{:},[:]
-    " Setup indent lines for tab formatted Golang code. Note, the IndentLine 
-    " plugin will not show markers for tab formatted code, so we need to mimic
-    " what that plugin does here using listchars and highlighting.
-    autocmd FileType go setlocal list listchars=tab:\¦\ 
-    autocmd FileType go highlight SpecialKey ctermfg=234 guifg=#1c1c1c
     " Match it navigation is broken for HTML, this Stack Overflow tip fixes it.
     autocmd FileType html let b:match_words = '<\(\w\w*\):</\1,{:}'
     autocmd FileType html setlocal shiftwidth=2 textwidth=999
@@ -173,7 +173,6 @@ augroup languageCustomizationsByType
     autocmd FileType json setlocal conceallevel=0
     autocmd FileType markdown setlocal formatoptions=tqln
     autocmd FileType markdown syntax sync fromstart
-    autocmd FileType ruby setlocal formatoptions=cq shiftwidth=2 makeprg=ruby\ -w\ %
     autocmd FileType scss let g:indentLine_faster=0
     autocmd FileType scss setlocal shiftwidth=2
     autocmd FileType sh setlocal textwidth=999
@@ -185,4 +184,5 @@ augroup END
 "===========================================================
 " COLOR SCHEME
 "===========================================================
-colorscheme janah
+
+colorscheme gruvbox
